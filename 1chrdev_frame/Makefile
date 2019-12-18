@@ -8,3 +8,4 @@ all:
 	make -C $(KERN_DIR) M=$(PWD) modules CROSS_COMPILE=arm-linux- ARCH=arm # modules为编译目标
 clean:
 	make -C $(KERN_DIR) M=$(PWD) clean
+	
