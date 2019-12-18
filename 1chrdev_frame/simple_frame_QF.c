@@ -78,7 +78,7 @@ static void __exit module_demo_exit(void)
     printk("---%s---%s---%d", __FILE__, __func__, __LINE__); // 打印此行说明注销成功
 }
 
+// 内核模块相关
 module_init(module_demo_init);
 module_exit(module_demo_exit);
-
 MODULE_LICENSE("GPL");
