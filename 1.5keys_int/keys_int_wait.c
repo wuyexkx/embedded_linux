@@ -27,7 +27,8 @@ volatile unsigned long *gpgdat = NULL;
 static struct class *keys_class;
 static struct class_device *keys_class_dev;
 
-// 。。。
+/* 定义一个等待队列button_waitq，这个等待队列实际上是由中断驱动的，
+    当中断发生时，会令挂接到这个等待队列的休眠进程唤醒 */
 static DECLARE_WAIT_QUEUE_HEAD(button_waitq);
 // 中断事件标志，ISR将它置1, read 清0
 static volatile int ev_press = 0;
