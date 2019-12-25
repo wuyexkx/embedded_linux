@@ -70,7 +70,25 @@ static irqreturn_t keys_irq(int irq, void *dev_id)
 }
 // GPF0/2 GPG3/11 申请中断
 static int keys_open (struct inode *inode, struct file *filep)
-{
+{   
+    /**********************************************************
+    中断控制器的初始化（底层）在irq_chip结构体中定义；
+    自定义的处理函数以desc为索引，在action链表中；
+        struct irq_desc
+        struct irq_chip
+        action
+    需用通过注册的机制将他们联系起来:
+        request_irq()
+        free_irq()
+    中断的顶半部和底半部：
+        顶半部：
+            在request_irq中传入的handler就是它，会屏蔽中断，行紧急之事开销小，如flag，读写IO寄存器等等，然后将下半部处理函数挂在到底半部的执行队列中去
+        底半部：
+            执行耗时工作，可以被打断，底半部机制包括： 
+                tasklet：使系统在适当时调度运行
+                工作队列：将工作推后执行的机制，推后的工作交由一个内核线程去执行，优势是允许重新调度甚至睡眠
+                软中断：一般写驱动不用也宜使用
+    ***********************************************************/
     /*
     *	@irq: Interrupt line to allocate
     *	@handler: Function to be called when the IRQ occurs
