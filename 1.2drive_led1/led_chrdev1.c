@@ -82,9 +82,9 @@ static int demo_cdev_init(void)
 static void demo_cdev_exit(void)
 {
     // 对应卸载
-    unregister_chrdev(major, "major_name_led");
-    class_device_unregister(demo_class_devs);  
+    class_device_destroy(demo_class_devs, MKDEV(major, 0));  // call to class_device_create()
     class_destroy(demo_class);
+    unregister_chrdev(major, "major_name_led");
 
     // 去掉映射关系
     iounmap(gpfcon);
